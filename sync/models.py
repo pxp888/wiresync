@@ -9,3 +9,16 @@ class nwork(models.Model):
         return self.name
 
 
+class peer(models.Model):
+    nwork = models.ForeignKey(nwork, on_delete=models.CASCADE, related_name='peers')
+    nickname = models.CharField(max_length=200)
+    pubkey = models.CharField(max_length=200)
+    lanip = models.CharField(max_length=200)
+    wanip = models.CharField(max_length=200)
+    wgip = models.CharField(max_length=200)
+    wgport = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nickname
+    
+

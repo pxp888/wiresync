@@ -18,6 +18,32 @@
         {% csrf_token %}
         <button type="submit" name="action" value="logout">Logout</button>
     </form>
+
+    {% for peer in peers %}
+    <p>{{peer.nickname}}</p>
+    <p>{{peer.lanip}}</p>
+    {% endfor %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="newpeerform">
+            <label for="nickname">Nickname</label>
+            <input type="text" name="nickname" placeholder="Nickname" required>
+            <label for="pubkey">Public Key</label>
+            <input type="text" name="pubkey" placeholder="Public Key" requride>
+            <label for="lanip">LAN IP</label>
+            <input type="text" name="lanip" placeholder="LAN IP">
+            <label for="wanip">WAN IP</label>
+            <input type="text" name="wanip" placeholder="WAN IP">
+            <label for="wgip">Wireguard IP</label>
+            <input type="text" name="wgip" placeholder="Wireguard IP">
+            <label for="wgport">Wireguard Port</label>
+            <input type="text" name="wgport" placeholder="Wireguard Port">
+            <button type="submit" name="action" value="add">Add</button>
+        </div>
+    </form>
+
+
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script> -->
 </body>
 

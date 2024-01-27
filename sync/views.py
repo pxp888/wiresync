@@ -1,10 +1,12 @@
-from django.shortcuts import render, redirect
-from .models import nwork
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import nwork, peer 
 import hashlib
 
 
 
 # Create your views here.
+
+'''helper - This checks if the session is valid or not'''
 def check_session(request):
     name = request.session.get('name','')
     khash = request.session.get('khash','')
@@ -18,13 +20,14 @@ def check_session(request):
         return False
 
 
+'''This is the welcome page'''
 def welcome(request):
     if request.method == 'POST':
         action = request.POST.get('action','')
         if action == 'login':
             return login(request)
         elif action == 'create':
-            return create(request)
+            return createNwork(request)
     else:
         if check_session(request):
             return redirect('home')
@@ -32,6 +35,7 @@ def welcome(request):
             return render(request, 'sync/welcome.html', {'msg':''})
 
 
+'''this responds to login requests'''
 def login(request):
     name = request.POST.get('netname')
     password = request.POST.get('password')
@@ -48,7 +52,8 @@ def login(request):
         return render(request, 'sync/welcome.html', {'msg':'Name not found'})
 
 
-def create(request):
+'''this responds to create requests'''
+def createNwork(request):
     name = request.POST.get('netname')
     password = request.POST.get('password')
     khash = hashlib.sha256(password.encode('utf-8')).hexdigest()
@@ -63,6 +68,7 @@ def create(request):
         return redirect('home')
 
 
+'''this is the home page'''
 def home(request):
     if request.method == 'POST':
         action = request.POST.get('action','')
@@ -72,6 +78,8 @@ def home(request):
     else:
         if check_session(request):
             name = request.session.get('name','')
-            return render(request, 'sync/home.html', {'name':name})
+            peers = peer.objects.filter(nwork__name=name)
+            return render(request, 'sync/home.html', {'name':name, 'peers':peers})
         else:
             return redirect('/')
+
