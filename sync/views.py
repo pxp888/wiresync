@@ -4,8 +4,14 @@ from django.shortcuts import render, get_object_or_404
 
 def welcome(request):
     if request.method == "POST":
-        print(request)
+        action = request.POST.get("action")
+        if action == 'login':
+            return render(request, "sync/welcome.html", {'error':'bad key'} )
+        if action == 'create':
+            return render(request, "sync/home.html", )
+        
     else:
         return render(request, "sync/welcome.html", )
+
 
 
