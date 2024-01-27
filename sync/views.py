@@ -75,6 +75,8 @@ def home(request):
         if action == 'logout':
             request.session.flush()
             return redirect('/')
+        elif action == 'addPeer':
+            return addPeer(request)
     else:
         if check_session(request):
             name = request.session.get('name','')
@@ -82,4 +84,28 @@ def home(request):
             return render(request, 'sync/home.html', {'name':name, 'peers':peers})
         else:
             return redirect('/')
+
+
+def addPeer(request):
+    name = request.session.get('name','')
+    nickname = request.POST.get('nickname','')
+    pubkey = request.POST.get('pubkey','')
+    lanip = request.POST.get('lanip','')
+    wanip = request.POST.get('wanip','')
+    wgip = request.POST.get('wgip','')
+    wgport = request.POST.get('wgport','')
+
+    n = nwork.objects.get(name=name)
+    try:
+        p = peer.objects.get(nwork=n, nickname=nickname)
+        p.pubkey = pubkey
+        p.lanip = lanip
+        p.wanip = wanip
+        p.wgip = wgip
+        p.wgport = wgport
+        p.save()
+    except:
+        p = peer(nwork=n, nickname=nickname, pubkey=pubkey, lanip=lanip, wanip=wanip, wgip=wgip, wgport=wgport)
+        p.save()
+    return redirect('home')
 

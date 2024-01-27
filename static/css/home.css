@@ -1,0 +1,73 @@
+
+h3 {
+    font-size: 1.2rem;
+    /* margin: 1rem 0; */
+    margin-block-start: 1rem;
+    margin-block-end: 1rem;
+}
+
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.nworkname {
+    font-size: 2rem;
+    margin: 1rem;
+}
+
+#peerlist {
+    overflow-x: auto;
+    border-bottom: 1px solid black;
+    margin: 1rem;
+}
+
+.peerlistHeading {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    font-weight: bold;
+}
+
+.peerlistHeading p {
+    border-bottom: 1px solid black;
+    margin: 0;
+}
+
+#peerlist p {
+    min-width: 200px;
+    margin: 8px 0;
+}
+
+.peerlistEntries {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.peerlistEntries:hover {
+    background-color: #f1f1f1;
+}
+
+#newpeerSection {
+    margin: 1rem;
+    max-width: 800px;
+}
+
+.newpeerForm {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+}
+
+.newpeerForm button {
+    grid-column-start: 2;
+}
+
+.sectionHead {
+    background-color: gray;
+    color: white;
+    margin-top: 1rem;
+}
+
+

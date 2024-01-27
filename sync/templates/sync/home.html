@@ -8,43 +8,67 @@
 <head>
     <title>wireSync</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 
 <body>
-    <h1>{{name}}</h1>
-    <p>{{msg}}</p>
+    <div class="header">
+        <div>
+            <span class="nworkname">network : </span>
+            <span class="nworkname">{{name}}</span>
+        </div>
 
-    <form method="POST">
-        {% csrf_token %}
-        <button type="submit" name="action" value="logout">Logout</button>
-    </form>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" name="action" value="logout">Logout</button>
+        </form>
+    </div>
 
-    {% for peer in peers %}
-    <p>{{peer.nickname}}</p>
-    <p>{{peer.lanip}}</p>
-    {% endfor %}
+    <h3 class="sectionHead" id="peerlistHead">Peerlist</h3>
+    <div id="peerlist">
+        <div class="peerlistHeading">
+            <p>Nickname</p>
+            <p>Public Key</p>
+            <p>Wireguard IP</p>
+            <p>Wireguard Port</p>
+            <p>LAN IP</p>
+            <p>WAN IP</p>
+        </div>
 
-    <form method="POST">
-        {% csrf_token %}
-        <div class="newpeerform">
+        {% for peer in peers %}
+        <div class="peerlistEntries">
+            <p>{{peer.nickname}}</p>
+            <p>{{peer.pubkey}}</p>
+            <p>{{peer.wgip}}</p>
+            <p>{{peer.wgport}}</p>
+            <p>{{peer.lanip}}</p>
+            <p>{{peer.wanip}}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="sectionHead" id="newpeerSectionHead">Add Peer</h3>
+    <div id="newpeerSection">
+        <form method="POST" class="newpeerForm">
+            {% csrf_token %}
             <label for="nickname">Nickname</label>
             <input type="text" name="nickname" placeholder="Nickname" required>
             <label for="pubkey">Public Key</label>
             <input type="text" name="pubkey" placeholder="Public Key" requride>
-            <label for="lanip">LAN IP</label>
-            <input type="text" name="lanip" placeholder="LAN IP">
-            <label for="wanip">WAN IP</label>
-            <input type="text" name="wanip" placeholder="WAN IP">
             <label for="wgip">Wireguard IP</label>
             <input type="text" name="wgip" placeholder="Wireguard IP">
             <label for="wgport">Wireguard Port</label>
             <input type="text" name="wgport" placeholder="Wireguard Port">
-            <button type="submit" name="action" value="add">Add</button>
-        </div>
-    </form>
+            <label for="lanip">LAN IP</label>
+            <input type="text" name="lanip" placeholder="LAN IP">
+            <label for="wanip">WAN IP</label>
+            <input type="text" name="wanip" placeholder="WAN IP">
+            <button type="submit" name="action" value="addPeer">Add Peer</button>
+        </form>
+    </div>
 
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/home.js' %}"></script>
 </body>
 
 </html>
