@@ -7,13 +7,18 @@
     <title>wireSync</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block headstuff %}
     {% endblock %}
 </head>
 
 <body>
-{% block content %}
+    <div class="logodiv">
+        <p class="logo">WireSync</p>
+    </div>
 
+
+{% block content %}
 {% endblock %}
 
 </body>

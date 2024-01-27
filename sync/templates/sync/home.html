@@ -1,17 +1,14 @@
+{% extends "base.html" %}
 {% load static %}
 
 <!-- {% url 'home' as home_url %} -->
 
-<!DOCTYPE html>
-<html class="h-100" lang="en">
-
-<head>
-    <title>wireSync</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+{% block headstuff %}
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
-</head>
+{% endblock %}
 
-<body>
+
+{% block content %}
     <div class="header">
         <div>
             <span class="nworkname">network : </span>
@@ -69,7 +66,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'js/home.js' %}"></script>
-</body>
+{% endblock %}
 
-</html>
 

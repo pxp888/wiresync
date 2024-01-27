@@ -1,0 +1,13 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.logodiv {
+    background-color: gray;
+}
+
+.logo {
+    font-size: 2rem;
+    margin: 1rem .5rem;
+}
+
