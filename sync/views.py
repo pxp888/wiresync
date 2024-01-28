@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import nwork, peer 
-import hashlib
+import hashlib, time 
 
 
 
@@ -88,6 +88,7 @@ def home(request):
             return redirect('/')
 
 
+'''this adds or updates peer information'''
 def addPeer(request):
     name = request.session.get('name','')
     nickname = request.POST.get('nickname','')

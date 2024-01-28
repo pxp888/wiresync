@@ -44,7 +44,7 @@
         {% endfor %}
     </div>
 
-    <h3 class="sectionHead" id="newpeerSectionHead">Add Peer</h3>
+    <h3 class="sectionHead" id="newpeerSectionHead">Update Peer</h3>
     <div id="newpeerSection">
         <form method="POST" class="newpeerForm">
             {% csrf_token %}
@@ -60,7 +60,7 @@
             <input type="text" name="lanip" placeholder="LAN IP">
             <label for="wanip">WAN IP</label>
             <input type="text" name="wanip" placeholder="WAN IP">
-            <button type="submit" name="action" value="addPeer">Add Peer</button>
+            <button type="submit" name="action" value="addPeer">Update Peer</button>
         </form>
     </div>
 
