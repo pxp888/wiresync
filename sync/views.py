@@ -111,8 +111,7 @@ def addPeer(request):
         p.wgip = wgip
         p.wgport = wgport
         p.save()
-    except Exception as e:
-        print('exception: ', e)
+    except:
         p = peer(nwork=n, nickname=nickname, pubkey=pubkey, lanip=lanip, wanip=wanip, wgip=wgip, wgport=wgport)
         p.save()
     return redirect('home')
