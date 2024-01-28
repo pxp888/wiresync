@@ -47,7 +47,7 @@
 
     <h3 class="sectionHead" id="newpeerSectionHead">Update Peer</h3>
     <div id="newpeerSection" class="formSection">
-        <form method="POST" class="inputForm">
+        <form method="POST" class="inputForm" autocomplete="off">
             {% csrf_token %}
             <label for="nickname">Nickname</label>
             <input type="text" name="nickname" placeholder="Nickname" required>
