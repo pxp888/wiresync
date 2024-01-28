@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block headstuff %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="header">
+        <div>
+            <span class="nworkname">network : </span>
+            <span class="nworkname">{{name}}</span>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" name="action" value="goHome">Home</button>
+            <button type="submit" name="action" value="logout">Logout</button>
+        </form>
+    </div>
+
+    <h3 class="sectionHead" id="peerlistHead">Change Password</h3>
+    <div class="formsection">
+        <form method="POST" class="inputForm" id="passwordForm">
+            {% csrf_token %}
+            <label for="oldpass1">Old Password</label>
+            <input type="text" name="oldpass1" placeholder="Old Password" required>
+            <label for="oldpass2">Old Password</label>
+            <input type="text" name="oldpass2" placeholder="Old Password" requride>
+            <label for="newpass1">New Password</label>
+            <input type="text" name="newpass1" placeholder="New Password" required>
+            <label for="newpass2">New Password</label>
+            <input type="text" name="newpass2" placeholder="New Password" requride>
+            <button type="submit" name="action" value="updatePassword" id="updatePasswordButton">Update Password</button>
+        </form>
+    </div>
+
+    <p id="msgLine">{{msg}}</p>
+
+{% endblock %}
+

@@ -17,6 +17,7 @@
 
         <form method="POST">
             {% csrf_token %}
+            <button type="submit" name="action" value="goAccount">Account</button>
             <button type="submit" name="action" value="logout">Logout</button>
         </form>
     </div>
@@ -45,8 +46,8 @@
     </div>
 
     <h3 class="sectionHead" id="newpeerSectionHead">Update Peer</h3>
-    <div id="newpeerSection">
-        <form method="POST" class="newpeerForm">
+    <div id="newpeerSection" class="formSection">
+        <form method="POST" class="inputForm">
             {% csrf_token %}
             <label for="nickname">Nickname</label>
             <input type="text" name="nickname" placeholder="Nickname" required>
@@ -74,5 +75,4 @@
     <script src="{% static 'js/jsontalk.js' %}"></script>
 
 {% endblock %}
-
 

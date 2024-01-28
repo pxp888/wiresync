@@ -60,22 +60,22 @@ h3 {
     display: none;
 }
 
-#newpeerSection {
+.formSection {
     margin: 1rem;
     /* max-width: 800px; */
 }
 
-.newpeerForm {
+.inputForm {
     display: grid;
     grid-template-columns: 120px 1fr;
     align-items: baseline;
 }
 
-.newpeerForm input[type="text" i] {
+.inputForm input[type="text" i] {
     margin: 2px 0;
 }
 
-.newpeerForm button {
+.inputForm button {
     grid-column-start: 2;
 }
 
