@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from .models import nwork, peer 
 import hashlib
 
@@ -109,3 +111,9 @@ def addPeer(request):
         p.save()
     return redirect('home')
 
+
+
+@csrf_exempt
+def test(request):
+    print(request)
+    return JsonResponse({'t':'test', 'msg':'success'})
