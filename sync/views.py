@@ -81,15 +81,18 @@ def createNwork(request):
         return render(request, 'sync/welcome.html', {'name':name, 'msg':str(e)})
 
 
+'''this logs the user out'''
+def logout(request):
+    request.session.flush()
+    return redirect('/')
+
+
 '''this is the home page'''
 def home(request):
     if not check_session(request): return redirect('/')
     if request.method == 'POST':
         action = request.POST.get('action','')
-        if action == 'logout':
-            request.session.flush()
-            return redirect('/')
-        elif action == 'addPeer':
+        if action == 'addPeer':
             return addPeer(request)
         elif action == 'removePeer':
             return removePeer(request)
@@ -134,13 +137,6 @@ def removePeer(request):
     p = peer.objects.get(nwork=n, nickname=nickname)
     p.delete()
     return redirect('home')
-
-
-'''this tests json responses'''
-@csrf_exempt
-def test(request):
-    print(request)
-    return JsonResponse({'t':'test', 'msg':'success'})
 
 
 '''this is the account page'''
@@ -196,3 +192,9 @@ def updatePassword(request):
 
     return render(request, 'sync/account.html', {'name':name, 'msg':'Password Updated'})
 
+
+'''this tests json responses'''
+@csrf_exempt
+def test(request):
+    print(request)
+    return JsonResponse({'t':'test', 'msg':'success'})
