@@ -50,8 +50,10 @@ def login(request):
             return redirect('home')
         else:
             return render(request, 'sync/welcome.html', {'msg':'Wrong password'})
-    except:
+    except nwork.DoesNotExist:
         return render(request, 'sync/welcome.html', {'msg':'Name not found'})
+    except Exception as e:
+        return render(request, 'sync/welcome.html', {'msg':str(e)})
 
 
 '''this responds to create requests'''
@@ -62,12 +64,14 @@ def createNwork(request):
     try:
         n = nwork.objects.get(name=name)
         return render(request, 'sync/welcome.html', {'msg':'Name already exists'})
-    except:
+    except nwork.DoesNotExist:
         n = nwork(name=name, khash=khash)
         n.save()
         request.session['name'] = name
         request.session['khash'] = khash
         return redirect('home')
+    except Exception as e:
+        return render(request, 'sync/welcome.html', {'msg':str(e)})
 
 
 '''this is the home page'''
@@ -107,7 +111,8 @@ def addPeer(request):
         p.wgip = wgip
         p.wgport = wgport
         p.save()
-    except:
+    except Exception as e:
+        print('exception: ', e)
         p = peer(nwork=n, nickname=nickname, pubkey=pubkey, lanip=lanip, wanip=wanip, wgip=wgip, wgport=wgport)
         p.save()
     return redirect('home')
