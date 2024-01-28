@@ -91,6 +91,8 @@ def home(request):
             return redirect('/')
         elif action == 'addPeer':
             return addPeer(request)
+        elif action == 'removePeer':
+            return removePeer(request)
         elif action == 'goAccount':
             return redirect('account')
     else:
@@ -121,6 +123,16 @@ def addPeer(request):
     except:
         p = peer(nwork=n, nickname=nickname, pubkey=pubkey, lanip=lanip, wanip=wanip, wgip=wgip, wgport=wgport)
         p.save()
+    return redirect('home')
+
+
+'''this removes a peer'''
+def removePeer(request):
+    name = request.session.get('name','')
+    nickname = request.POST.get('nickname','')
+    n = nwork.objects.get(name=name)
+    p = peer.objects.get(nwork=n, nickname=nickname)
+    p.delete()
     return redirect('home')
 
 

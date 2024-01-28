@@ -67,17 +67,19 @@ h3 {
 
 .inputForm {
     display: grid;
-    grid-template-columns: 120px 1fr;
+    grid-template-columns: 120px 1fr 1fr;
     align-items: baseline;
 }
 
 .inputForm input[type="text" i] {
     margin: 2px 0;
+    grid-column-start: 2;
+    grid-column-end: 4;
 }
 
-.inputForm button {
+/* .inputForm button {
     grid-column-start: 2;
-}
+} */
 
 .sectionHead {
     background-color: gray;
