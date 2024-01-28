@@ -1,6 +1,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
+    background-color: rgb(172 172 173);
 }
 
 .contentFrame {
@@ -10,7 +11,7 @@ body {
 .logodiv {
     display: flex;
     flex-direction: row;
-    background-color: gray;
+    background-color: rgb(128 127 193);
 }
 
 .logo {
@@ -19,7 +20,7 @@ body {
     margin-left: 1rem;
 }
 
-.right {
+.logo.right {
     color:white;
     margin-left: 0;
 }

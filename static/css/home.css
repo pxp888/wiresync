@@ -23,7 +23,9 @@ h3 {
 #peerlist {
     overflow-x: auto;
     border-bottom: 1px solid black;
-    margin: 1rem;
+    margin: .5rem;
+    padding: .5rem;
+    background-color: white;
 }
 
 .peerlistHeading {
@@ -45,6 +47,7 @@ h3 {
 .peerlistEntries {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
+    
 }
 
 .peerlistEntries:hover {
