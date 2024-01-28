@@ -22,6 +22,15 @@ def check_session(request):
         return False
 
 
+'''helper - This sets the session'''
+def set_session(request):
+    name = request.POST.get('netname')
+    password = request.POST.get('password')
+    khash = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    request.session['name'] = name
+    request.session['khash'] = khash
+
+
 '''This is the welcome page'''
 def welcome(request):
     if request.method == 'POST':
@@ -45,8 +54,7 @@ def login(request):
     try:
         n = nwork.objects.get(name=name)
         if n.khash == khash:
-            request.session['name'] = name
-            request.session['khash'] = khash
+            set_session(request)
             return redirect('home')
         else:
             return render(request, 'sync/welcome.html', {'msg':'Wrong password'})
@@ -67,8 +75,7 @@ def createNwork(request):
     except nwork.DoesNotExist:
         n = nwork(name=name, khash=khash)
         n.save()
-        request.session['name'] = name
-        request.session['khash'] = khash
+        set_session(request)
         return redirect('home')
     except Exception as e:
         return render(request, 'sync/welcome.html', {'msg':str(e)})
@@ -84,16 +91,17 @@ def home(request):
         elif action == 'addPeer':
             return addPeer(request)
     else:
-        if check_session(request):
-            name = request.session.get('name','')
-            peers = peer.objects.filter(nwork__name=name)
-            return render(request, 'sync/home.html', {'name':name, 'peers':peers})
-        else:
-            return redirect('/')
+        if not check_session(request): return redirect('/')
 
+        name = request.session.get('name','')
+        peers = peer.objects.filter(nwork__name=name)
+        return render(request, 'sync/home.html', {'name':name, 'peers':peers})
+        
 
 '''this adds or updates peer information'''
 def addPeer(request):
+    if not check_session(request): return redirect('/')
+
     name = request.session.get('name','')
     nickname = request.POST.get('nickname','')
     pubkey = request.POST.get('pubkey','')
