@@ -17,7 +17,7 @@ function togglePeerSection() {
 
 function entryfill(event) {
     kids = event.target.parentElement.children;
-    fields = $(".newpeerForm input");
+    fields = $(".inputForm input");
     for (let i = 0; i < kids.length; i++) {
         fields[i+1].value = kids[i].innerHTML;
     }
