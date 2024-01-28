@@ -52,6 +52,8 @@ h3 {
 }
 
 .peerlistEntries p {
+    /* overflow-x: hidden;
+    white-space: nowrap; */
     overflow-x: auto;
     white-space: nowrap;
 }
@@ -62,16 +64,12 @@ h3 {
 
 #newpeerSection {
     margin: 1rem;
-    /* max-width: 800px; */
+    max-width: 800px;
 }
 
 .newpeerForm {
     display: grid;
     grid-template-columns: 120px 1fr;
-}
-
-.newpeerForm input[type="text" i] {
-    margin: 2px 0;
 }
 
 .newpeerForm button {

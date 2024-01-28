@@ -25,4 +25,3 @@ entries.click(entryfill)
 newpeerSectionHead.click(toggleNewPeerSection)
 peerlistHead.click(togglePeerSection)
 
-

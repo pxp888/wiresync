@@ -12,12 +12,11 @@ h3 {
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
-    margin: 1rem 0;
 }
 
 .nworkname {
     font-size: 1.5rem;
-    /* margin: 1rem; */
+    margin: 1rem;
 }
 
 #peerlist {
@@ -51,27 +50,14 @@ h3 {
     background-color: #f1f1f1;
 }
 
-.peerlistEntries p {
-    overflow-x: auto;
-    white-space: nowrap;
-}
-
-.peerlistEntries p::-webkit-scrollbar {
-    display: none;
-}
-
 #newpeerSection {
     margin: 1rem;
-    /* max-width: 800px; */
+    max-width: 800px;
 }
 
 .newpeerForm {
     display: grid;
     grid-template-columns: 120px 1fr;
-}
-
-.newpeerForm input[type="text" i] {
-    margin: 2px 0;
 }
 
 .newpeerForm button {

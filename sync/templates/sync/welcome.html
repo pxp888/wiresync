@@ -1,16 +1,22 @@
 {% extends "base.html" %}
+{% load static %}
 
 <!-- {% url 'home' as home_url %} -->
+{% block headstuff %}
+    <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
+{% endblock %}
 
 
 
 {% block content %}
-    <form method="POST">
+    <form class="loginForm" method="POST">
         {% csrf_token %}
+        <label for="netname">Network Name</label>
         <input type="text" name="netname" placeholder="Network Name" required>
+        <label for="password">Password</label>
         <input type="password" name="password" placeholder="password" required>
-        <button type="submit" name="action" value="login">Login</button>
-        <button type="submit" name="action" value="create">Create</button>
+        <button type="submit" name="action" value="login" class="centralbutton">Login</button>
+        <button type="submit" name="action" value="create" class="rightbutton">Create</button>
     </form>
 {% endblock %}
 
