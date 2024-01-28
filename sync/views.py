@@ -1,90 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import nwork, peer
-import hashlib, time
-
+from .xsession import check_session
 
 
 # Create your views here.
-
-'''helper - This checks if the session is valid or not'''
-def check_session(request):
-    name = request.session.get('name','')
-    khash = request.session.get('khash','')
-    try:
-        n = nwork.objects.get(name=name)
-        if n.khash == khash:
-            return True
-        else:
-            return False
-    except:
-        return False
-
-
-'''helper - This sets the session'''
-def set_session(request):
-    name = request.POST.get('netname')
-    password = request.POST.get('password')
-    khash = hashlib.sha256(password.encode('utf-8')).hexdigest()
-    request.session['name'] = name
-    request.session['khash'] = khash
-
-
-'''This is the welcome page'''
-def welcome(request):
-    if request.method == 'POST':
-        action = request.POST.get('action','')
-        if action == 'login':
-            return login(request)
-        elif action == 'create':
-            return createNwork(request)
-    else:
-        if check_session(request):
-            return redirect('home')
-        else:
-            return render(request, 'sync/welcome.html', {'msg':''})
-
-
-'''this responds to login requests'''
-def login(request):
-    name = request.POST.get('netname')
-    password = request.POST.get('password')
-    khash = hashlib.sha256(password.encode('utf-8')).hexdigest()
-    try:
-        n = nwork.objects.get(name=name)
-        if n.khash == khash:
-            set_session(request)
-            return redirect('home')
-        else:
-            return render(request, 'sync/welcome.html', {'name':name, 'msg':'Wrong password'})
-    except nwork.DoesNotExist:
-        return render(request, 'sync/welcome.html', {'name':name, 'msg':'Name not found'})
-    except Exception as e:
-        return render(request, 'sync/welcome.html', {'name':name, 'msg':str(e)})
-
-
-'''this responds to create requests'''
-def createNwork(request):
-    name = request.POST.get('netname')
-    password = request.POST.get('password')
-    khash = hashlib.sha256(password.encode('utf-8')).hexdigest()
-    try:
-        n = nwork.objects.get(name=name)
-        return render(request, 'sync/welcome.html', {'name':name, 'msg':'Name already exists'})
-    except nwork.DoesNotExist:
-        n = nwork(name=name, khash=khash)
-        n.save()
-        set_session(request)
-        return redirect('home')
-    except Exception as e:
-        return render(request, 'sync/welcome.html', {'name':name, 'msg':str(e)})
-
-
-'''this logs the user out'''
-def logout(request):
-    request.session.flush()
-    return redirect('/')
 
 
 '''this is the home page'''
@@ -137,60 +58,6 @@ def removePeer(request):
     p = peer.objects.get(nwork=n, nickname=nickname)
     p.delete()
     return redirect('home')
-
-
-'''this is the account page'''
-def account(request):
-    if not check_session(request): return redirect('/')
-    if request.method == 'POST':
-        action = request.POST.get('action','')
-        if action == 'logout':
-            request.session.flush()
-            return redirect('/')
-        elif action == 'goHome':
-            return redirect('/')
-        elif action == 'updatePassword':
-            return updatePassword(request)
-    else:
-        name = request.session.get('name','')
-        return render(request, 'sync/account.html', {'name':name})
-
-
-'''this updates the password'''
-def updatePassword(request):
-    name = request.session.get('name','')
-    try:
-        oldpass1 = request.POST['oldpass1']
-        oldpass2 = request.POST['oldpass2']
-        newpass1 = request.POST['newpass1']
-        newpass2 = request.POST['newpass2']
-    except KeyError:
-        return render(request, 'sync/account.html', {'name':name, 'msg':'Missing parameters'})
-    except Exception as e:
-        return render(request, 'sync/account.html', {'name':name, 'msg':str(e)})
-
-    if newpass1 != newpass2:
-        return render(request, 'sync/account.html', {'name':name, 'msg':'New passwords do not match'})
-    if oldpass1 != oldpass2:
-        return render(request, 'sync/account.html', {'name':name, 'msg':'Old passwords do not match'})
-
-    if len(newpass1) < 4:
-        return render(request, 'sync/account.html', {'name':name, 'msg':'New Password too short'})
-    
-    khash = hashlib.sha256(oldpass1.encode('utf-8')).hexdigest()
-    try:
-        n = nwork.objects.get(name=name)
-        if n.khash != khash:
-            return render(request, 'sync/account.html', {'name':name, 'msg':'Old password is wrong'})
-        else:
-            n.khash = hashlib.sha256(newpass1.encode('utf-8')).hexdigest()
-            n.save()
-    except nwork.DoesNotExist:
-        return render(request, 'sync/account.html', {'name':name, 'msg':'Name not found'})
-    except Exception as e:
-        return render(request, 'sync/account.html', {'name':name, 'msg':str(e)})
-
-    return render(request, 'sync/account.html', {'name':name, 'msg':'Password Updated'})
 
 
 '''this tests json responses'''

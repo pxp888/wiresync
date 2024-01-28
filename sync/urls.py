@@ -1,11 +1,11 @@
-from . import views
+from . import views, account, welcome
 from django.urls import path
 
 urlpatterns = [
+    path('', welcome.welcome),
     path('home/', views.home, name='home'),
-    path('', views.welcome),
+    path('account/', account.account, name='account'),
+    path('logout/', welcome.logout, name='logout'),
     path('test', views.test, name='test'),
-    path('account/', views.account, name='account'),
-    path('logout/', views.logout, name='logout'),
 ]
 
