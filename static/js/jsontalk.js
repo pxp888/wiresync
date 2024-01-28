@@ -1,6 +1,6 @@
 const say = (...msgs) => console.log(...msgs);
 
-const URL="/test";
+
 const rfuncs = {};
 
 

@@ -68,6 +68,7 @@ h3 {
 .newpeerForm {
     display: grid;
     grid-template-columns: 120px 1fr;
+    align-items: baseline;
 }
 
 .newpeerForm input[type="text" i] {
